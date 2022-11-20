@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://croar0kebe37e"]
+
+[ext_resource type="PackedScene" uid="uid://b11lm75hfbnky" path="res://clipmap/clipmap.tscn" id="2_56t03"]
+[ext_resource type="PackedScene" uid="uid://bu3vtmwnoul1u" path="res://player/player_character.tscn" id="2_vccuw"]
+[ext_resource type="PackedScene" uid="uid://c7xublrnupds4" path="res://collisionmap/collisionmap.tscn" id="3_pjk5k"]
+[ext_resource type="PackedScene" uid="uid://d2esxayut1lwe" path="res://clipmap/clipmap_partition.tscn" id="4_3eu7i"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ob5j3"]
+sky_top_color = Color(0.556863, 0.690196, 0.803922, 1)
+sky_horizon_color = Color(0.556863, 0.690196, 0.803922, 1)
+sky_curve = 0.046168
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_f48gx"]
+sky_material = SubResource("ProceduralSkyMaterial_ob5j3")
+
+[sub_resource type="Environment" id="Environment_vfp0j"]
+background_mode = 2
+background_color = Color(0.556863, 0.690196, 0.803922, 1)
+sky = SubResource("Sky_f48gx")
+reflected_light_source = 1
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vfp0j")
+
+[node name="DirectionalLight3d" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.402616, -0.344928, 0.847895, 0.0145117, 0.923765, 0.382684, -0.915254, 0.166379, -0.366917, 0, 4.18046, 23.0021)
+shadow_enabled = true
+
+[node name="PlayerCharacter" parent="." instance=ExtResource("2_vccuw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16, 0)
+speed = 15
+
+[node name="Terrain" type="StaticBody3D" parent="."]
+
+[node name="Collisionmap" parent="Terrain" node_paths=PackedStringArray("physics_body") instance=ExtResource("3_pjk5k")]
+physics_body = NodePath("../../PlayerCharacter")
+
+[node name="Clipmap" parent="Terrain" node_paths=PackedStringArray("player_character") instance=ExtResource("2_56t03")]
+player_character = NodePath("../../PlayerCharacter")
+
+[node name="Partition" parent="." instance=ExtResource("4_3eu7i")]
+visible = false

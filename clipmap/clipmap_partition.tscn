@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2esxayut1lwe"]
+
+[ext_resource type="Shader" path="res://clipmap/clipmap.gdshader" id="1_as87i"]
+[ext_resource type="Script" path="res://clipmap/clipmap_partition.gd" id="2_mry86"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wlro5"]
+render_priority = 0
+shader = ExtResource("1_as87i")
+
+[node name="Partition" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0665827)
+material_override = SubResource("ShaderMaterial_wlro5")
+extra_cull_margin = 512.0
+skeleton = NodePath("../..")
+script = ExtResource("2_mry86")
